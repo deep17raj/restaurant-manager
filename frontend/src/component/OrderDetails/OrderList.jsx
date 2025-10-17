@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Plus, Minus } from "lucide-react";
-export default function OrderList({ cart, updateCart }) {
+export default function OrderList({
+  cart,
+  updateCart,
+  totalPrice,
+  handleSubmitOrder,
+}) {
   const cartItems = Object.values(cart);
-  const handleSubmitOrder = async()=>{
-    
-  }
-  const totalPrice = cartItems.reduce((sum,item)=>sum+(item.price*item.quant),0);
+  useEffect(() => {
+    console.log(cartItems);
+  }, [cart]);
+
   if (!cartItems.length) {
     return (
       <div>
@@ -14,37 +19,46 @@ export default function OrderList({ cart, updateCart }) {
     );
   }
   return (
-    <div>
+    <div className="space-y-3 ">
       {cartItems.map((item) => (
-        <div className="flex gap-3" key={item.id}>
-          <div className="w-[165px] h-[110px] object-cover rounded-lg">
-            <img className="w-[100px] h-[100px]" src={item.imageSrc} alt="img" />
+        <div className="flex gap-3 rounded-xl bg-[#EBEBEB]" key={item.id}>
+          <div className="flex min-w-[65%]">
+            <div className="w-[120px] h-[110px] object-cover  ">
+              <img
+                className="w-[100%] h-[100%] rounded-xl"
+                src={item.imageSrc}
+                alt="img"
+              />
+            </div>
+            <div className="flex flex-col justify-center text-center w-[60%]">
+              <p>{item.name}</p>
+              <p>{item.quant} plate</p>
+            </div>
           </div>
-          <div className="">
-            <p>{item.name}</p>
-            <p>{item.quant} plate</p>
-          </div>
-          <div className="flex">
-            <button
-              onClick={() => updateCart(item.id,item.quant-1)}
-              className="flex items-center justify-center w-8 h-8 rounded-xl bg-green-500 transition-colors"
-            >
-              <Minus size={16} color={"#fff"} strokeWidth={"3px"} />
-            </button>
-            <span className="font-semibold text-lg mx-3">{item.quant}</span>
-            <button
-              onClick={() => updateCart(item.id,item.quant+1)}
-              className="flex items-center justify-center w-8 h-8 rounded-xl bg-green-500 transition-colors"
-            >
-              <Plus size={16} color={"#fff"} strokeWidth={"3px"} />
-            </button>
+          <div className="flex flex-col  w-[30%]">
+            <div className="flex justify-center items-center flex-1">
+              <button
+                onClick={() => updateCart(item.id, item.quant - 1)}
+                className="flex items-center justify-center w-8 h-8 rounded-xl bg-green-500 transition-colors"
+              >
+                <Minus size={16} color={"#fff"} strokeWidth={"3px"} />
+              </button>
+              <span className="font-semibold text-lg mx-3">{item.quant}</span>
+              <button
+                onClick={() => updateCart(item.id, item.quant + 1)}
+                className="flex items-center justify-center w-8 h-8 rounded-xl bg-green-500 transition-colors"
+              >
+                <Plus size={16} color={"#fff"} strokeWidth={"3px"} />
+              </button>
+            </div>
+
+            <div className="w-[100%] mb-3 text-xl text-center">
+              ₹{item.totalPrice}
+            </div>
           </div>
         </div>
       ))}
-      <div className="flex gap-2 mt-5">
-          <p>₹ {totalPrice}</p>
-          <button onClick={handleSubmitOrder}>Confirm Order</button>
-      </div>
+      
     </div>
   );
 }

@@ -1,12 +1,11 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 
 export default function Header() {
   return (
-    <div className='w-[390px] h-[72px] bg-[#FF5200]'>
-        <p>Salt And Peper</p>
-        <p>Digital Menu</p>
-        <Link to="/cart">Cart</Link>
+    <div className='w-[100%] h-[72px] flex flex-col justify-center items-center bg-[#FF5200]'>
+        <p className='font-medium font-ribeye text-[1.6875rem] text-[#fff]'>UNO HOTEL</p>
+        <p className='font-medium text-xl font-ribeye text-[#fff]'>Digital Menu</p>
+        
     </div>
   )
 }
